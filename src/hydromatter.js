@@ -30,10 +30,7 @@ const hydromatter = {
     config: require("./assets/configs/bot.js"),
     log: console.log,
     commands: new Collection(),
-    cooldowns: {
-        work: 3600000,
-        beg: 30000
-    },
+    cooldowns: require("./assets/configs/cooldown.js"),
     database: new Database(__dirname + "/assets/database.json"),
     chatgpt: new (require("./assets/packages/chatgpt"))(process.env.openai_token),
     functions: require("./assets/packages/hydromatter_functions"),
