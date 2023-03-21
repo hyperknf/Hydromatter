@@ -11,7 +11,7 @@ const { Client, GatewayIntentBits, Collection, ActivityType, Routes, REST } = re
 const Database = require("./assets/packages/database")
 
 const hydromatter = {
-    source_code: "https://replit.com/@HyperKNF/Hydromatter?v=1",
+    source_code: "https://github.com/hyperknf/Hydromatter",
     client: new Client({
         intents: [
             GatewayIntentBits.Guilds,
