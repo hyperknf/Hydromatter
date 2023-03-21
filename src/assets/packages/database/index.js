@@ -3,8 +3,8 @@ const fs = require("fs")
 module.exports = class Database {
     static fs = fs
     
-    constructor() {
-        this.directory = "./assets/database.json"
+    constructor(directory) {
+        this.directory = directory
         this.data = {}
         if (!fs.existsSync(this.directory)) {
             fs.writeFileSync(this.directory, "{}", "utf-8")

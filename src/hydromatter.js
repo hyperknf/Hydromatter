@@ -2,7 +2,13 @@ const express = require("express")
 const app = express()
 const port = 3000
 
-app.get("/", (request, response) => response.send("Welcome to the host for Hydromatter Discord bot!"))
+app.get("/", (request, response) => {
+    response.send("Welcome to the host for Hydromatter Discord bot!")
+})
+
+app.listen(port, () => {
+  console.log(`Successful EXPRESS host on port ${port}`)
+})
 
 const fs = require("node:fs")
 const path = require("node:path")
@@ -28,7 +34,7 @@ const hydromatter = {
         work: 3600000,
         beg: 30000
     },
-    database: new Database(),
+    database: new Database(__dirname + "/assets/database.json"),
     chatgpt: new (require("./assets/packages/chatgpt"))(process.env.openai_token),
     functions: require("./assets/packages/hydromatter_functions"),
     filter: require("./assets/packages/filter"),
