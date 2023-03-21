@@ -1,0 +1,6 @@
+{
+    "name": "ChatGPT",
+    "version": "1.0.0",
+    "description": "ChatGPT",
+    "main": "index.js"
+}

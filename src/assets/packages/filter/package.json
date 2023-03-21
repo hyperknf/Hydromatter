@@ -1,0 +1,6 @@
+{
+    "name": "badwords",
+    "version": "1.0.0",
+    "description": "Bad words",
+    "main": "index.js"
+}

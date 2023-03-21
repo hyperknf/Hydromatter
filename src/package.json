@@ -1,0 +1,21 @@
+{
+  "name": "Hydromatter",
+  "version": "1.0.0",
+  "description": "Hydromatter Discord bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "HyperKNF <superdooperal@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^18.0.6",
+    "decimal.js": "^10.4.3",
+    "discord.js": "^14.7.1",
+    "exponent-big-integer": "^1.1.0-a",
+    "express": "^4.18.2",
+    "node-fetch": "^3.2.6",
+    "openai": "^3.2.1"
+  }
+}

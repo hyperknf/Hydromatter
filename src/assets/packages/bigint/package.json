@@ -1,0 +1,18 @@
+{
+  "name": "exponent-big-integer",
+  "author": "HyperKNF <superdooperalt@gmail.com>",
+  "version": "1.1.2a.md1",
+  "description": "exponent-big-integer is an npm package and library that represents numbers in base and exponents, which allows users to bypass Number.MAX_VALUE limit in native JavaScript code",
+  "main": "bigint_main.js",
+  "keywords": [
+    "math",
+    "big",
+    "bigint",
+    "biginteger",
+    "integer"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "decimal.js": "^10.4.3"
+  }
+}

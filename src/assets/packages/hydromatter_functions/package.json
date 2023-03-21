@@ -1,0 +1,6 @@
+{
+    "name": "hydromatter_functions",
+    "version": "1.0.0",
+    "description": "Functions for Hydromatter Discord bot",
+    "main": "index.js"
+}
