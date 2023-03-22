@@ -341,6 +341,11 @@ const class_functions = {
 
     return [String(resultNum), Math.round(exp)]
   },
+  log: function (base, value) {
+    const log10 = Math.log10(value[0]) + value[1]
+    const log10base = Math.log10(base)
+    return log10 / log10base
+  },
   absolute: function (value) {
     value[0] = decimal.abs(new decimal(value[0]))
     return value
@@ -606,6 +611,21 @@ ExponentBigInt.power = function (x, y) {
     return class_functions.power(x, y)
 }
 ExponentBigInt.pow = ExponentBigInt.power
+
+/**
+* Evaluates the logaithm of the second number with the first number as base, supports exponent-big-integer values, the base only supports up to Number.MAX_SAFE_INTEGER
+* @param {*} base - The base
+* @param {*} value - The value
+* @return {number} - The JavaScript native number value returned
+*/
+
+ExponentBigInt.logarithm = function (base, value) {
+    base = ExponentBigInt.toNumber(class_functions.new(base))
+    if (base >= Number.MAX_SAFE_INTEGER) throw new Error("The base you've entered was larger than Number.MAX_SAFE_INTEGER")
+    value = class_functions.new(value)
+    return class_functions.log(base, value)
+}
+ExponentBigInt.log = ExponentBigInt.logarithm
 
 /**
 * Evaluates the modulo of two numbers, supports exponent-big-integer values

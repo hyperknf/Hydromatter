@@ -160,6 +160,16 @@ Evaluates the first number to the power of the second number, supports exponent-
 
 ---
 
+```ExponentBigInt.logarithm(base, value)```
+
+base - The base
+
+value - The value
+
+Evaluates the logaithm of the second number with the first number as base, supports exponent-big-integer values, the base only supports up to Number.MAX_SAFE_INTEGER
+
+---
+
 ```ExponentBigInt.modulo(x, y)```
 
 x - The first value
@@ -234,10 +244,10 @@ Checks if one number is equal to another, supports exponent-big-integer values
 
 ## Updates
 
-### 1.1.1b
+### 1.1.3a
 
 ` - ` Started using **decimal.js** package as a way to store the base, it is recommended to install all dependencies before using this package
 
-` - ` Added `ExponentBigInt.basic`
+` - ` Added `ExponentBigInt.basic` and `ExponentBigInt.logarithm`
 
 ` - ` Bug fixes
