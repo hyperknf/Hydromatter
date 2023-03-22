@@ -4,7 +4,7 @@
     const port = 3000
     
     app.get("/", (request, response) => {
-        response.sendFile(__dirname + "/assets/page/index.html")
+        response.sendFile(__dirname + "/assets/pages/index.html")
     })
     
     app.listen(port, () => {
@@ -13,6 +13,19 @@
     
     const fs = require("node:fs")
     const path = require("node:path")
+
+    fs.writeFileSync(__dirname + "/assets/pages/console/main.html", fs.readFileSync(__dirname + "/assets/pages/console/default.html"))
+    app.get("/console", (request, response) => {
+        response.sendFile(__dirname + "/assets/pages/console/main.html")
+    })
+    console.log = function (string) {
+        process.stdout.write(`${string}\n`)
+        const file_content = fs.readFileSync(__dirname + "/assets/pages/console/main.html")
+        fs.writeFileSync(__dirname + "/assets/pages/console/main.html", file_content + `${string.replace(/\n/g, "<br>").replace(/ /g, "⠀")}<br>`)
+        app.get("/console", (request, response) => {
+            response.sendFile(__dirname + "/assets/pages/console.html")
+        })
+    }
     
     const { Client, GatewayIntentBits, Collection, ActivityType, Routes, REST } = require("discord.js")
     const Database = require("quick.db").QuickDB
@@ -56,7 +69,7 @@
             hydro: hydromatter.bigint.new(0)
         },
         moderation: {
-            warns: []
+            warns: {}
         },
         cooldowns: {
             work: 0,
@@ -145,10 +158,11 @@
     
     hydromatter.client.once(hydromatter.events.ClientReady, async user_object => {
         hydromatter.log(`\n*********************************************`)
-        hydromatter.log(`|==> ${user_object.user.username} has successfully logged in`)
-        hydromatter.log(`|==> Version\n |=> ${hydromatter.version.major}\n |=> ${hydromatter.version.minor}\n |=> ${hydromatter.version.fixes}`)
-        hydromatter.log(`|==> Timestamp\n |=> ${hydromatter.started}`)
-        hydromatter.log(`|==> Source Code\n |=> ${hydromatter.source_code}`)
+        hydromatter.log(`|===> ${user_object.user.username} has successfully logged in`)
+        hydromatter.log(`|===> Version\n |==> Major\n  |=> ${hydromatter.version.major}\n |==> Minor\n  |=> ${hydromatter.version.minor}\n |==> Fixes\n  |=> ${hydromatter.version.fixes}`)
+        hydromatter.log(`|===> Timestamp\n |==> ${hydromatter.started}`)
+        hydromatter.log(`|===> Hosting\n |==> Port\n  |=> ${port}\n |==> Page\n  |=> https://Hydromatter.hyperknf.repl.co`)
+        hydromatter.log(`|===> Source Code\n |==> ${hydromatter.source_code}`)
         hydromatter.log(`*********************************************\n`)
     
         try {
