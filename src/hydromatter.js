@@ -144,12 +144,12 @@
     const rest = new REST({ version: '10' }).setToken(hydromatter.config.token)
     
     hydromatter.client.once(hydromatter.events.ClientReady, async user_object => {
-        hydromatter.log(`\n****************************************`)
+        hydromatter.log(`\n*********************************************`)
         hydromatter.log(`|==> ${user_object.user.username} has successfully logged in`)
         hydromatter.log(`|==> Version\n |=> ${hydromatter.version.major}\n |=> ${hydromatter.version.minor}\n |=> ${hydromatter.version.fixes}`)
         hydromatter.log(`|==> Timestamp\n |=> ${hydromatter.started}`)
         hydromatter.log(`|==> Source Code\n |=> ${hydromatter.source_code}`)
-        hydromatter.log(`****************************************\n`)
+        hydromatter.log(`*********************************************\n`)
     
         try {
             hydromatter.log("Started loading slash commands...")
