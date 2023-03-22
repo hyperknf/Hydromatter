@@ -264,7 +264,7 @@ const class_functions = {
         if (value[1] > 6) return functions.processSuffix(value)
         return String(decimal.mul(value[0], Math.round(Math.pow(10, value[1]))))
       }
-    } else throw new Error(`The value you've entered (${value_dummy}) was not an exponent-big-integer value`)
+    } else throw new Error(`The value you've entered was not an exponent-big-integer value`)
   },
   getSuffix: function (index) {
     return (functions.processSuffix(["1", index * 3]).split(" "))[1]
