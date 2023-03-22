@@ -21,7 +21,7 @@
     console.log = function (string) {
         process.stdout.write(`${string}\n`)
         const file_content = fs.readFileSync(__dirname + "/assets/pages/console/main.html")
-        fs.writeFileSync(__dirname + "/assets/pages/console/main.html", "<br>" + file_content + `${string.replace(/\n/g, "<br>").replace(/ /g, "⠀")}`)
+        fs.writeFileSync(__dirname + "/assets/pages/console/main.html", file_content + `${string.replace(/\n/g, "<br>").replace(/ /g, "⠀")}<br>`)
         app.get("/console", (request, response) => {
             response.sendFile(__dirname + "/assets/pages/console.html")
         })
