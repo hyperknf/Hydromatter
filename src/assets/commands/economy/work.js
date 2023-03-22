@@ -8,14 +8,15 @@ module.exports = {
         const time = Date.now()
         
         const user_id = interaction.user.id
-    
-        if (time - hydromatter.database.get(`${user_id}.cooldowns.work`) < hydromatter.cooldowns.work) {
+
+        const cooldown = await hydromatter.database.get(`${user_id}.cooldowns.work`)
+        if (time - cooldown < hydromatter.cooldowns.work) {
             const latency = Date.now() - time
           
             const embed = new EmbedBuilder()
                 .setColor("FF0000")
                 .setTitle("The command is still on cooldown")
-                .setDescription(`Please try again <t:${Math.round((hydromatter.database.get(`${user_id}.cooldowns.work`) + hydromatter.cooldowns.work) / 1000)}:R>`)
+                .setDescription(`Please try again <t:${Math.round((cooldown + hydromatter.cooldowns.work) / 1000)}:R>`)
                 .setTimestamp()
                 .setFooter({ text: `Process: ${latency}ms` })
           
@@ -24,11 +25,12 @@ module.exports = {
                 ephemeral: true
             })
         }
-        hydromatter.database.set(`${user_id}.cooldowns.work`, time)
+        await hydromatter.database.set(`${user_id}.cooldowns.work`, time)
     
         const income = hydromatter.functions.randint(150, 250)
-    
-        hydromatter.database.set(`${user_id}.economy.cash`, hydromatter.bigint.add(hydromatter.database.get(`${user_id}.economy.cash`), income))
+
+        const cash = await hydromatter.database.get(`${user_id}.economy.cash`)
+        await hydromatter.database.set(`${user_id}.economy.cash`, hydromatter.bigint.add(cash, income))
     
         const latency = Date.now() - time
         const embed = new EmbedBuilder()

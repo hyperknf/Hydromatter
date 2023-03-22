@@ -9,6 +9,11 @@ module.exports = {
         
         const category = interaction.options.getString("category")
         const user_id = interaction.user.id
+
+        const cash = await hydromatter.database.get(`${user_id}.economy.cash`)
+        const bank = await hydromatter.database.get(`${user_id}.economy.bank`)
+        const gems = await hydromatter.database.get(`${user_id}.economy.gems`)
+        const hydro = await hydromatter.database.get(`${user_id}.economy.hydro`)
     
         const latency = Date.now() - time
         embed = new EmbedBuilder()
@@ -17,11 +22,11 @@ module.exports = {
             .addFields(
                 {
                     "name": "Cash",
-                    "value": `🪙 ${(typeof hydromatter.bigint.toNumberString("suffix", hydromatter.database.get(`${user_id}.economy.cash`))) == "number" ? Math.round((hydromatter.bigint.toNumberString("suffix", hydromatter.database.get(`${user_id}.economy.cash`)))) : (hydromatter.bigint.toNumberString("suffix", hydromatter.database.get(`${user_id}.economy.cash`)))}`
+                    "value": `🪙 ${typeof hydromatter.bigint.toNumberString("suffix", cash) == "number" ? Math.round(hydromatter.bigint.toNumberString("suffix", cash)) : (hydromatter.bigint.toNumberString("suffix", cash))}`
                 },
                 {
                     "name": "Bank",
-                    "value": `🪙 ${Math.round(hydromatter.bigint.toNumberString("suffix", hydromatter.database.get(`${user_id}.economy.bank`)))}`
+                    "value": `🪙 ${typeof hydromatter.bigint.toNumberString("suffix", bank) == "number" ? Math.round(hydromatter.bigint.toNumberString("suffix", bank)) : (hydromatter.bigint.toNumberString("suffix", bank))}`
                 },
                 {
                     "name": "Total",
@@ -33,11 +38,11 @@ module.exports = {
                 },
                 {
                     "name": "Gems",
-                    "value": `💎 ${hydromatter.bigint.toNumberString("whole", hydromatter.database.get(`${user_id}.economy.gems`))}`
+                    "value": `💎 ${typeof hydromatter.bigint.toNumberString("suffix", gems) == "number" ? Math.round(hydromatter.bigint.toNumberString("suffix", gems)) : (hydromatter.bigint.toNumberString("suffix", gems))}`
                 },
                 {
                     "name": "Hydro",
-                    "value": `💧 ${hydromatter.bigint.toNumberString("whole", hydromatter.database.get(`${user_id}.economy.hydro`))}`
+                    "value": `💧 ${typeof hydromatter.bigint.toNumberString("suffix", hydro) == "number" ? Math.round(hydromatter.bigint.toNumberString("suffix", hydro)) : (hydromatter.bigint.toNumberString("suffix", hydro))}`
                 }
             )
             .setTimestamp()

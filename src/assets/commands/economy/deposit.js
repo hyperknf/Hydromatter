@@ -16,7 +16,9 @@ module.exports = {
         const user_id = interaction.user.id
 
         const amount = interaction.options.getNumber("amount")
-        if (amount > hydromatter.database.get(`${user_id}.economy.cash`)) return interaction.editReply({
+        let cash = await hydromatter.database.get(`${user_id}.economy.cash`)
+        let bank = await hydromatter.database.get(`${user_id}.economy.bank`)
+        if (amount > cash) return interaction.editReply({
             content: "The amount you've entered was higher than what you can deposit",
             ephemeral: true
         })
@@ -25,9 +27,11 @@ module.exports = {
             ephemeral: true
         })
     
-        hydromatter.database.set(`${user_id}.economy.cash`, hydromatter.bigint.minus(hydromatter.database.get(`${user_id}.economy.cash`), amount))
-        hydromatter.database.set(`${user_id}.economy.bank`, hydromatter.bigint.add(hydromatter.database.get(`${user_id}.economy.bank`), amount))
-    
+        await hydromatter.database.set(`${user_id}.economy.cash`, hydromatter.bigint.minus(cash, amount))
+        await hydromatter.database.set(`${user_id}.economy.bank`, hydromatter.bigint.add(bank, amount))
+
+        cash = await hydromatter.database.get(`${user_id}.economy.cash`)
+        bank = await hydromatter.database.get(`${user_id}.economy.bank`)
         const latency = Date.now() - time
         const embed = new EmbedBuilder()
             .setColor("FF0000")
@@ -40,12 +44,12 @@ module.exports = {
                 },
                 {
                     name: "Pocket",
-                    value: `$${hydromatter.bigint.toNumber(hydromatter.database.get(`${user_id}.economy.cash`))}`,
+                    value: `$${hydromatter.bigint.toNumber(cash)}`,
                     inline: true
                 },
                 {
                     name: "Bank",
-                    value: `$${hydromatter.bigint.toNumber(hydromatter.database.get(`${user_id}.economy.bank`))}`,
+                    value: `$${hydromatter.bigint.toNumber(bank)}`,
                     inline: true
                 }
             )
