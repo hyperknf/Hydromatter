@@ -40,7 +40,7 @@
         started: Date.now(),
         version: {
             major: "4.1",
-            minor: "4.1.1",
+            minor: "4.1.2",
             fixes: "4.1.2a",
             log: "` - ` Added </chatgpt:1083364337479057459>, </work:1085536479633211492> and </beg:1085543733098991647>\n` - ` Added \"Latest Update\", \"Source Code\", \"Servers\", \"Server Members\" and \"Shards\" section to </bot_information:1082279023624867902>\n` - ` New module and methods for handling numbers\n` - ` Updated debugging and profane words list\n` - ` Bug fixes"
         }
@@ -140,16 +140,16 @@
         hydromatter.commands.set(command.data.name, command)
         commands.push(command.data.toJSON())
     }
-    
+
     const rest = new REST({ version: '10' }).setToken(hydromatter.config.token)
     
     hydromatter.client.once(hydromatter.events.ClientReady, async user_object => {
-        hydromatter.log(`\n********************`)
-        hydromatter.log(`${user_object.user.username} has successfully logged in`)
-        hydromatter.log(`- Version\n-- ${hydromatter.version.fixes}`)
-        hydromatter.log(`- Timestamp\n-- ${hydromatter.started}`)
-        hydromatter.log(`- Source Code\n-- ${hydromatter.source_code}`)
-        hydromatter.log(`********************\n`)
+        hydromatter.log(`\n****************************************`)
+        hydromatter.log(`|==> ${user_object.user.username} has successfully logged in`)
+        hydromatter.log(`|==> Version\n |=> ${hydromatter.version.major}\n |=> ${hydromatter.version.minor}\n |=> ${hydromatter.version.fixes}`)
+        hydromatter.log(`|==> Timestamp\n |=> ${hydromatter.started}`)
+        hydromatter.log(`|==> Source Code\n |=> ${hydromatter.source_code}`)
+        hydromatter.log(`****************************************\n`)
     
         try {
             hydromatter.log("Started loading slash commands...")
