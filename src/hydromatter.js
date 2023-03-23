@@ -3,26 +3,35 @@
     const app = express()
     const port = 3000
     
-    app.get("/", (request, response) => {
+    app.get("/", async (request, response) => {
         response.sendFile(__dirname + "/assets/pages/index.html")
     })
     
-    app.listen(port, () => {
-        console.log(`Successful EXPRESS host on port ${port}`)
-    })
+    app.listen(port, async () => console.log(`Successful EXPRESS host on port ${port}`))
     
     const fs = require("node:fs")
     const path = require("node:path")
 
-    fs.writeFileSync(__dirname + "/assets/pages/console/main.html", fs.readFileSync(__dirname + "/assets/pages/console/default.html"))
+    fs.writeFileSync(
+        __dirname + "/assets/pages/console/main.html",
+        fs.readFileSync(__dirname + "/assets/pages/console/default.html", (error) => {
+            if (error) console.log(error)
+        })
+    )
     app.get("/console", (request, response) => {
         response.sendFile(__dirname + "/assets/pages/console/main.html")
     })
     console.log = function (string) {
         process.stdout.write(`${string}\n`)
         const file_content = fs.readFileSync(__dirname + "/assets/pages/console/main.html")
-        fs.writeFileSync(__dirname + "/assets/pages/console/main.html", file_content + `${string.replace(/\n/g, "<br>").replace(/ /g, "⠀")}<br>`)
-        app.get("/console", (request, response) => {
+        fs.writeFileSync(
+            __dirname + "/assets/pages/console/main.html",
+            file_content + `\n${string.replace(/\n/g, "\n<br>\n").replace(/ /g, "⠀")}\n<br>`,
+            (error) => {
+                if (error) console.log(error)
+            }
+        )
+        app.get("/console", async (request, response) => {
             response.sendFile(__dirname + "/assets/pages/console.html")
         })
     }
