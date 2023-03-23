@@ -12,7 +12,7 @@ module.exports = {
       .addFields(
         {
           "name": "Economy",
-          "value": "```/inventory {category(string,value:balance/items)}\n/work\n/beg```"
+          "value": "```/balance\n/work\n/beg\n/deposit {amount(integer)}\n/withdraw {amount(integer)}\n/shop {view/buy} buy:{item(string)}```"
         },
         {
           "name": "Moderation",
@@ -20,14 +20,14 @@ module.exports = {
         },
         {
           "name": "Miscellaneous",
-          "value": "```/bot_information\n\n/help\n\n/chatgpt {model(string),value:..} {prompt(string)}```"
+          "value": "```/bot_information\n/help\n/chatgpt {model(string),value:..} {prompt(string)}```"
         }
       )
       .setTimestamp()
       .setFooter({ text: `Process: 0ms` })
     
 		await interaction.editReply({
-      embeds: [embed]
-    })
+          embeds: [embed]
+        })
 	},
 }

@@ -21,7 +21,8 @@
     app.get("/console", (request, response) => {
         response.sendFile(__dirname + "/assets/pages/console/main.html")
     })
-    console.log = function (string) {
+    console.log = function (...value) {
+        const string = value.join(" ")
         process.stdout.write(`${string}\n`)
         const file_content = fs.readFileSync(__dirname + "/assets/pages/console/main.html")
         fs.writeFileSync(
@@ -38,6 +39,15 @@
     
     const { Client, GatewayIntentBits, Collection, ActivityType, Routes, REST } = require("discord.js")
     const Database = require("quick.db").QuickDB
+
+    const items = {}
+    const itemsPath = path.join(path.join(__dirname, "assets"), "items")
+    let itemFiles = fs.readdirSync(itemsPath).filter(file => file.endsWith('.js'))
+    for (const file of itemFiles) {
+        const filePath = path.join(itemsPath, file)
+        const item = require(filePath)
+        items[file.replace(/.js/g, "")] = item
+    }
     
     const hydromatter = {
         source_code: "https://github.com/hyperknf/Hydromatter",
@@ -53,6 +63,7 @@
         config: require("./assets/configs/bot.js"),
         log: console.log,
         commands: new Collection(),
+        items: items,
         cooldowns: require("./assets/configs/cooldown.js"),
         database: new Database({ filePath: __dirname + "/assets/database.sqlite" }),
         chatgpt: new (require("./assets/packages/chatgpt"))(process.env.openai_token),

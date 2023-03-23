@@ -12,7 +12,6 @@ module.exports = {
     .addStringOption(option =>
   		  option.setName("value")
     			.setDescription("Value")
-    			.setRequired(true)
     ),
 	async execute(hydromatter, interaction) {
     if (interaction.user.id != "655678656970227714") return await interaction.editReply({
@@ -23,6 +22,16 @@ module.exports = {
     const start_time = Date.now()
 
     let result
+    let send_reply = true
+
+    if (!interaction.options.getString("value")) {
+        if (!(interaction.options.getString("command").toLowerCase() == "rickroll")) {
+            return await interaction.editReply({
+                content: "That command requires the \"value\" option",
+                ephemeral: true
+            })
+        }
+    }
 
     if (interaction.options.getString("command").toLowerCase() == "eval") {
       try {
@@ -73,7 +82,19 @@ module.exports = {
           result = `Failed:\n\`\`\`${exception}\`\`\``
         }
       }
+    } else if (interaction.options.getString("command").toLowerCase() == "rickroll") {
+        const troll = new EmbedBuilder()
+            .setTitle("Rickroll")
+            .setColor("FF0000")
+            .setDescription("Never gonna give you up\nNever gonna let you down\nNever gonna run around and desert you\nNever gonna make you cry\nNever gonna say goodbye\nNever gonna tell a lie and hurt you")
+            .setFooter({text:"You just got rickrolled"})
+        await interaction.editReply({
+            embeds: [troll]
+        })
+        send_reply = false
     } else result = "Failed:\n\`\`\`Invalid command\`\`\`"
+
+    if (!send_reply) return
 
     const embed = new EmbedBuilder()
       .setTitle("ChatGPT Prompt")
@@ -96,7 +117,7 @@ module.exports = {
       .setFooter({ text: `Process: ${Date.now() - start_time}ms` })
     
 		await interaction.editReply({
-      embeds: [embed]
-    })
+          embeds: [embed]
+        })
 	},
 }
