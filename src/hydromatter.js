@@ -6,6 +6,11 @@
     app.get("/", async (request, response) => {
         response.sendFile(__dirname + "/assets/pages/index.html")
     })
+
+    app.get("/files", async (request, response) => {
+        response.sendFile(__dirname + "/assets/pages/files.html")
+    })
+    app.use("/files", express.static(__dirname + "/../"))
     
     app.listen(port, async () => console.log(`Successful EXPRESS host on port ${port}`))
     
