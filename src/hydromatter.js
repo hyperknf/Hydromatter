@@ -3,15 +3,6 @@
     const app = express()
     const port = 3000
     
-    app.get("/", async (request, response) => {
-        response.sendFile(__dirname + "/assets/pages/index.html")
-    })
-
-    app.get("/files", async (request, response) => {
-        response.sendFile(__dirname + "/assets/pages/files.html")
-    })
-    app.use("/files", express.static(__dirname + "/../"))
-    
     app.listen(port, async () => console.log(`Successful EXPRESS host on port ${port}`))
     
     const fs = require("node:fs")
@@ -41,6 +32,15 @@
             response.sendFile(__dirname + "/assets/pages/console.html")
         })
     }
+
+    app.get("/", async (request, response) => {
+        response.sendFile(__dirname + "/assets/pages/index.html")
+    })
+        
+    app.get("/files", async (request, response) => {
+        response.sendFile(__dirname + "/assets/pages/files.html")
+    })
+    app.use("/files", express.static(__dirname + "/../"))
     
     const { Client, GatewayIntentBits, Collection, ActivityType, Routes, REST } = require("discord.js")
     const Database = require("quick.db").QuickDB
@@ -84,8 +84,6 @@
         }
     }
     
-    const whole_db = await hydromatter.database.all()
-    
     const starting = {
         economy: {
             cash: hydromatter.bigint.new(0),
@@ -128,32 +126,8 @@
             }
         }
     }
-    
-    try {
-        for (let user_id in whole_db) {
-            for (let item in starting) {
-                const i = await hydromatter.database.get(`${user_id}.${item}`)
-                if (!i) await hydromatter.database.set(`${user_id}.${item}`, starting[item])
-                if (typeof starting[item] == "object") {
-                    for (let subitem in starting[item]) {
-                        const ii = await hydromatter.database.get(`${user_id}.${item}.${subitem}`)
-                        if (!ii) await hydromatter.database.set(`${user_id}.${item}.${subitem}`, starting[item][subitem])
-                        if (typeof starting[item][subitem] == "object") {
-                            for (let subsubitem in starting[item][subitem]) {
-                                const iii = await hydromatter.database.get(`${user_id}.${item}.${subitem}.${subsubitem}`)
-                                if (!iii) await hydromatter.database.set(`${user_id}.${item}.${subitem}.${subsubitem}`, starting[item][subitem][subsubitem])
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    } catch (exception) {
-        throw new Error(`There was an error whilst updating the database. ${exception}`)
-    }
     const commands = []
     const mainCommandPath = path.join(path.join(__dirname, "assets"), "commands")
-    
     let commandsPath = path.join(mainCommandPath, "miscellaneous")
     let commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'))
     for (const file of commandFiles) {
