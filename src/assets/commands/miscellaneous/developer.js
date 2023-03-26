@@ -89,6 +89,10 @@ module.exports = {
             .setDescription("Never gonna give you up\nNever gonna let you down\nNever gonna run around and desert you\nNever gonna make you cry\nNever gonna say goodbye\nNever gonna tell a lie and hurt you")
             .setFooter({text:"You just got rickrolled"})
         await interaction.editReply({
+            content: "Sent!",
+            ephemeral: true
+        })
+        await interaction.channel.send({
             embeds: [troll]
         })
         send_reply = false
