@@ -11,7 +11,7 @@ try {
     (async () => {
         for (let user_id in whole_db) {
             for (let item in starting) {
-                const i = await hdatabase.get(`${user_id}.${item}`)
+                const i = await database.get(`${user_id}.${item}`)
                 if (!i) await database.set(`${user_id}.${item}`, starting[item])
                 if (typeof starting[item] == "object") {
                     for (let subitem in starting[item]) {

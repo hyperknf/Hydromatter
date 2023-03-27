@@ -52,14 +52,15 @@ module.exports = {
       }
     } else if (interaction.options.getString("command").toLowerCase() == "ban") {
       const value_arg = interaction.options.getString("value")
+      const banned = await hydromatter.database.get(`${value_arg}.banned`)
       if (isNaN(Number(value_arg))) {
         result = `Failed:\n\`\`\`Invalid user ID\`\`\``
-      } else if (typeof hydromatter.database.get(`${value_arg}.banned`) == "undefined") {
+      } else if (typeof banned == "undefined") {
         result = `Failed:\n\`\`\`User not in database\`\`\``
       } else {
         try {
-          if (hydromatter.database.get(`${value_arg}.banned`) == 0) {
-            hydromatter.database.set(`${value_arg}.banned`, 1)
+          if (banned == 0) {
+            await hydromatter.database.set(`${value_arg}.banned`, 1)
             result = `Success:\n\`\`\`User banned\`\`\``
           } else result = `Failed:\n\`\`\`User already banned\`\`\``
         } catch (exception) {
@@ -68,14 +69,15 @@ module.exports = {
       }
     } else if (interaction.options.getString("command").toLowerCase() == "unban") {
       const value_arg = interaction.options.getString("value")
+      const banned = await hydromatter.database.get(`${value_arg}.banned`)
       if (isNaN(Number(value_arg))) {
         result = `Failed:\n\`\`\`Invalid user ID\`\`\``
-      } else if (typeof hydromatter == "undefined") {
+      } else if (typeof banned == "undefined") {
         result = `Failed:\n\`\`\`User not in database\`\`\``
       } else {
         try {
-          if (hydromatter.database.get(`${value_arg}.banned`) == 1) {
-            hydromatter.database.set(`${value_arg}.banned`, 0)
+          if (banned == 1) {
+            await hydromatter.database.set(`${value_arg}.banned`, 0)
             result = `Success:\n\`\`\`User unbanned\`\`\``
           } else result = `Failed:\n\`\`\`User not banned\`\`\``
         } catch (exception) {
@@ -101,7 +103,7 @@ module.exports = {
     if (!send_reply) return
 
     const embed = new EmbedBuilder()
-      .setTitle("ChatGPT Prompt")
+      .setTitle("Developer Prompt")
       .addFields(
         {
           "name": "Command",

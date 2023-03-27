@@ -8,6 +8,16 @@
     const fs = require("node:fs")
     const path = require("node:path")
 
+    app.use((request, response, next) => {
+        fs.writeFileSync(
+            __dirname + "/assets/pages/log.txt",
+            fs.readFileSync(__dirname + "/assets/pages/log.txt", (error) => {
+                if (error) console.log(error)
+            }) + "\n" + request.url
+        )
+        next()
+    })
+
     fs.writeFileSync(
         __dirname + "/assets/pages/console/main.html",
         fs.readFileSync(__dirname + "/assets/pages/console/default.html", (error) => {
@@ -190,8 +200,9 @@
     
     hydromatter.client.on(hydromatter.events.InteractionCreate, async interaction => {
         init_user_db(interaction.user.id)
-    
-        if (hydromatter.database.get(`${interaction.user.id}.banned`) == 1) return interaction.reply({
+
+        const banned = await hydromatter.database.get(`${interaction.user.id}.banned`)
+        if (banned == 1 && (interaction.isChatInputCommand() && !(interaction.commandName == "developer"))) return interaction.reply({
             content: "Your access to the bot is forbidden",
             ephemeral: true
         })
