@@ -89,7 +89,7 @@
         version: {
             major: "4.1",
             minor: "4.1.2",
-            fixes: "4.1.2a",
+            fixes: "4.1.2c",
             log: "` - ` Added </chatgpt:1083364337479057459>, </work:1085536479633211492> and </beg:1085543733098991647>\n` - ` Added \"Latest Update\", \"Source Code\", \"Servers\", \"Server Members\" and \"Shards\" section to </bot_information:1082279023624867902>\n` - ` New module and methods for handling numbers\n` - ` Updated debugging and profane words list\n` - ` Bug fixes"
         }
     }
@@ -99,7 +99,10 @@
             cash: hydromatter.bigint.new(0),
             bank: hydromatter.bigint.new(0),
             gems: hydromatter.bigint.new(100),
-            hydro: hydromatter.bigint.new(0)
+            hydro: hydromatter.bigint.new(0),
+            inventory: {
+                "001": hydromatter.bigint.new(0)
+            }
         },
         moderation: {
             warns: {}

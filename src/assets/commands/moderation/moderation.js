@@ -3,7 +3,7 @@ const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require("disc
 module.exports = {
   data: new SlashCommandBuilder()
 		.setName("moderation")
-		.setDescription("Preforms different moderating actions, like mute, kick, or ban")
+		.setDescription("Preforms different moderating actions, like warn, mute, kick, or ban")
     .addStringOption(option =>
 		  option.setName("action")
   			.setDescription("Determines whether to mute, kick, or ban")

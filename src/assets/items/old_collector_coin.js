@@ -1,8 +1,8 @@
-const price = 100000
-const id = null
+const price = 69420
+const id = "001"
 
 module.exports = {
-    name: "Hydro",
+    name: "Old Collector's Coin",
     id,
     price,
     async buy(hydromatter, interaction, amount) {

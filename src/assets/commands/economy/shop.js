@@ -16,41 +16,42 @@ module.exports = {
                         .setDescription('The item you wanted to buy')
                         .setRequired(true)
                 )
+                .addIntegerOption(option =>
+                    option.setName('amount')
+                        .setDescription('The amount of item you wanted to buy')
+                        .setRequired(true)
+                )
         ),
 	async execute(hydromatter, interaction) {
-        switch (interaction.options.getSubcommand()) {
-            case "view":
-            default: {
-                const time = Date.now()
+        const subcommand = interaction.options.getSubcommand()
+        if (subcommand == "view") {
+            const time = Date.now()
                 
-                const category = interaction.options.getString("category")
-                const user_id = interaction.user.id
+            const category = interaction.options.getString("category")
+            const user_id = interaction.user.id
         
-                const cash = await hydromatter.database.get(`${user_id}.economy.cash`)
+            const cash = await hydromatter.database.get(`${user_id}.economy.cash`)
             
-                embed = new EmbedBuilder()
-                    .setColor("FF0000")
-                    .setTitle(`Inventory: ${interaction.user.username}'s Balance`)
-                    .setDescription(`**You have $${hydromatter.bigint.toNumberString("suffix", cash)} in your pocket right now**`)
-                    .setTimestamp()
-                for (let item in hydromatter.items) embed.addFields({
-                    name: hydromatter.items[item].name,
-                    value: `$${hydromatter.bigint.toNumberString("suffix", hydromatter.bigint.new(hydromatter.items[item].price))}`,
-                    inline: true
-                })
-                embed.setFooter({ text: `Process: ${Date.now() - time}ms` })
+            embed = new EmbedBuilder()
+                .setColor("FF0000")
+                .setTitle(`Inventory: ${interaction.user.username}'s Balance`)
+                .setDescription(`**You have $${hydromatter.bigint.toNumberString("suffix", cash)} in your pocket right now**`)
+                .setTimestamp()
+            for (let item in hydromatter.items) embed.addFields({
+                name: hydromatter.items[item].name,
+                value: `$${hydromatter.bigint.toNumberString("suffix", hydromatter.bigint.new(hydromatter.items[item].price))}`,
+                inline: true
+            })
+            embed.setFooter({ text: `Process: ${Date.now() - time}ms` })
             
-                await interaction.editReply({
-                  embeds: [embed]
-                })
-            }
-
-            case "buy": {
-                await interaction.editReply({
-                    content: "Coming soon!",
-                    ephemeral: true
-                })
-            }
+            await interaction.editReply({
+                embeds: [embed]
+            })
+        } else if (subcommand == "buy") {
+            await interaction.editReply({
+                content: "Coming soon!",
+                ephemeral: true
+            })
         }
 	}
 }

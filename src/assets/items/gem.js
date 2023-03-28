@@ -1,7 +1,13 @@
+const price = 1000
+const id = null
+
 module.exports = {
     name: "Gem",
-    price: 1000,
-    async buy(amount) {
-        return "Coming soon!"
+    id,
+    price,
+    async buy(hydromatter, interaction, amount) {
+        return interaction.editReply({
+            content: "Coming soon!"
+        })
     }
 }
