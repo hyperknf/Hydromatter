@@ -34,7 +34,7 @@ module.exports = {
             
             embed = new EmbedBuilder()
                 .setColor("FF0000")
-                .setTitle(`Inventory: ${interaction.user.username}'s Balance`)
+                .setTitle(`Shop`)
                 .setDescription(`**You have $${hydromatter.bigint.toNumberString("suffix", cash)} in your pocket right now**`)
                 .setTimestamp()
             for (let item in hydromatter.items) embed.addFields({
