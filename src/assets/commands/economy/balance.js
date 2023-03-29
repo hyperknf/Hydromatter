@@ -18,7 +18,7 @@ module.exports = {
         const latency = Date.now() - time
         embed = new EmbedBuilder()
             .setColor("FF0000")
-            .setTitle(`Inventory: ${interaction.user.username}'s Balance`)
+            .setTitle(`${interaction.user.username}'s Balance`)
             .addFields(
                 {
                     "name": "Cash",
