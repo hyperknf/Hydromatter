@@ -61,7 +61,7 @@
     for (const file of itemFiles) {
         const filePath = path.join(itemsPath, file)
         const item = require(filePath)
-        items[file.replace(/.js/g, "")] = item
+        items[item.id] = item
     }
     
     const hydromatter = {
