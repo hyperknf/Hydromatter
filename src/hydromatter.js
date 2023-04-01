@@ -8,6 +8,10 @@
     const fs = require("node:fs")
     const path = require("node:path")
 
+    fs.writeFileSync(
+        __dirname + "/assets/pages/log.txt",
+        "/"
+    )
     app.use((request, response, next) => {
         fs.writeFileSync(
             __dirname + "/assets/pages/log.txt",
