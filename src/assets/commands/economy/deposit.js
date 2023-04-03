@@ -49,7 +49,7 @@ module.exports = {
                 },
                 {
                     name: "Bank",
-                    value: `$${hydromatter.bigint.toNumber("suffix", bank)}`,
+                    value: `$${hydromatter.bigint.toString("suffix", bank)}`,
                     inline: true
                 }
             )

@@ -27,8 +27,8 @@ module.exports = {
             ephemeral: true
         })
     
-        await hydromatter.database.set(`${user_id}.economy.bank`, hydromatter.bigint.minus(cash, amount))
-        await hydromatter.database.set(`${user_id}.economy.cash`, hydromatter.bigint.add(bank, amount))
+        await hydromatter.database.set(`${user_id}.economy.bank`, hydromatter.bigint.minus(bank, amount))
+        await hydromatter.database.set(`${user_id}.economy.cash`, hydromatter.bigint.add(cash, amount))
 
         cash = await hydromatter.database.get(`${user_id}.economy.cash`)
         bank = await hydromatter.database.get(`${user_id}.economy.bank`)
