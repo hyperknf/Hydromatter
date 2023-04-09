@@ -44,12 +44,12 @@ module.exports = {
                 },
                 {
                     name: "Pocket",
-                    value: `$${hydromatter.bigint.toString("suffix", cash)}`,
+                    value: `$${hydromatter.bigint.toNumberString("suffix", cash)}`,
                     inline: true
                 },
                 {
                     name: "Bank",
-                    value: `$${hydromatter.bigint.toString("suffix", bank)}`,
+                    value: `$${hydromatter.bigint.toNumberString("suffix", bank)}`,
                     inline: true
                 }
             )
