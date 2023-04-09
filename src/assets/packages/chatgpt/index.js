@@ -12,7 +12,7 @@ module.exports = class ChatGPT {
       const completion = await this.client.createCompletion(
         {
           model: "text-davinci-003",
-          prompt: prompt,
+          prompt: prompt[prompt.length - 1].content ? prompt[prompt.length - 1].content : prompt,
           max_tokens: 2048,
           temperature: 0
         }
@@ -22,12 +22,10 @@ module.exports = class ChatGPT {
       const completion = await this.client.createChatCompletion(
         {
           model: "gpt-3.5-turbo",
-          messages: [
-            {
-              role: "user",
-              content: prompt
-            }
-          ],
+          messages: prompt[prompt.length - 1].content ? prompt : [{
+            role: "user",
+            content: prompt
+          }],
           max_tokens: 2048
         }
       )

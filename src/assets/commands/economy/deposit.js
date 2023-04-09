@@ -18,7 +18,7 @@ module.exports = {
         const amount = interaction.options.getNumber("amount")
         let cash = await hydromatter.database.get(`${user_id}.economy.cash`)
         let bank = await hydromatter.database.get(`${user_id}.economy.bank`)
-        if (amount > cash) return interaction.editReply({
+        if (hydromatter.bigint.isLarger(amount, cash)) return interaction.editReply({
             content: "The amount you've entered was higher than what you can deposit",
             ephemeral: true
         })

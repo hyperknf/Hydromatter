@@ -4,21 +4,21 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("chatgpt")
 		.setDescription("Asks ChatGPT a prompt, credits to OpenAI API")
-    .addStringOption(option => 
-        option.setName("model")
-          .setDescription("The model of ChatGPT")
-          .setRequired(true)
-          .addChoices(
-            {
-              "name": "gpt-3.5-turbo (September 2021)",
-              "value": "gpt-3.5-turbo"
-            },
-            {
-              "name": "text-davinci-003 (June 2021)",
-              "value": "text-davinci-003"
-            }
-          )
-    )
+        .addStringOption(option => 
+            option.setName("model")
+              .setDescription("The model of ChatGPT")
+              .setRequired(true)
+              .addChoices(
+                {
+                  "name": "gpt-3.5-turbo (September 2021)",
+                  "value": "gpt-3.5-turbo"
+                },
+                {
+                  "name": "text-davinci-003 (June 2021)",
+                  "value": "text-davinci-003"
+                }
+              )
+        )
     .addStringOption(option =>
   		  option.setName("prompt")
     			.setDescription("The prompt you wanted to ask ChatGPT")
@@ -38,7 +38,17 @@ module.exports = {
     
     const start_time = Date.now()
 
-    const result = await hydromatter.chatgpt.new(interaction.options.getString("model"), interaction.options.getString("prompt"))
+    await hydromatter.database.push(`${interaction.user.id}.chatgpt`, {
+        role: "user",
+        content: interaction.options.getString("prompt")
+    })
+    const prompt_obj = await hydromatter.database.get(`${interaction.user.id}.chatgpt`)
+
+    const result = await hydromatter.chatgpt.new(interaction.options.getString("model"), prompt_obj)
+    await hydromatter.database.push(`${interaction.user.id}.chatgpt`, {
+        role: "assistant",
+        content: result
+    })
 
     const embed = new EmbedBuilder()
       .setTitle("ChatGPT Prompt")
@@ -54,7 +64,7 @@ module.exports = {
         },
         {
           "name": "Notes",
-          "value": "Reply length limit = 2048 characters\nLonger reply = longer time needed\nResults might not be accurate\nI'm currently requesting access to the newest and the most capable model, GPT-4, please wait patiently before I am able to add it to the bot"
+          "value": "Reply length limit = 2048 characters\nLonger reply = longer time needed\nResults might not be accurate\nI'm currently requesting access to the newest and the most capable model, GPT4, please wait patiently before I am able to add it to the bot"
         }
       )
       .setColor("FF0000")

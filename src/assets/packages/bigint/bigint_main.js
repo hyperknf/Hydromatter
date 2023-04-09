@@ -351,10 +351,12 @@ const class_functions = {
     return value
   },
   compare: function (x, y) {
+    const xb = new decimal(x[0])
+    const yb = new decimal(y[0])
     if (x[1] > y[1]) return 1
     if (x[1] < y[1]) return 2
-    if (x[0].comparedTo(y[0]) == 1) return 1
-    if (x[0].comparedTo(y[0]) == -1) return 2
+    if (xb.comparedTo(yb) == 1) return 1
+    if (xb.comparedTo(yb) == -1) return 2
     return 0
   },
   isInteger: function (value) {
@@ -365,13 +367,17 @@ const class_functions = {
     return value[1] >= 0
   },
   isLarger: function (x, y) {
-    if (x[1] > [1]) return true
-    if (x[1] == y[1] && x[0].comparedTo(y[0]) == 1) return true
+    const xb = new decimal(x[0])
+    const yb = new decimal(y[0])
+    if (x[1] > y[1]) return true
+    if (x[1] == y[1] && xb.comparedTo(yb) == 1) return true
     return false
   },
   isSmaller: function (x, y) {
+    const xb = new decimal(x[0])
+    const yb = new decimal(y[0])
     if (x[1] < y[1]) return true
-    if (x[1] == y[1] && x[0].comparedTo(y[0]) == -1) return true
+    if (x[1] == y[1] && xb.comparedTo(yb) == -1) return true
     return false
   },
   isEqual: function (x, y) {
