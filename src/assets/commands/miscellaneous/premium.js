@@ -15,6 +15,8 @@ module.exports = {
                     is_patron == 0 ? "No subscription" :
                     is_patron == 1 ? "$5 subscription (Basic)" :
                     is_patron == 2 ? "$10 subscription (Premium)" :
+                    is_patron == 3 ? "$20 subscription (Superior)" :
+                    is_patron == 4 ? "$50 subscription (Super)" :
                     "Error"
                 ) + (
                     hydromatter.developers.includes(interaction.user.id) ? "\nDeveloper account" : ""
