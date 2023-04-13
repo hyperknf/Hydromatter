@@ -20,7 +20,7 @@ module.exports = {
         },
         {
           "name": "Miscellaneous",
-          "value": "```/bot_information\n/help\n/chatgpt {model(string),value:..} {prompt(string)}```"
+          "value": "```/bot_information\n/help\n/chatgpt {model(string),value:..} {prompt(string)}\n/premium```"
         }
       )
       .setTimestamp()

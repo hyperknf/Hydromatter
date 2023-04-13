@@ -1,0 +1,9 @@
+{
+    "name": "Patreon",
+    "version": "1.0.0",
+    "description": "The patreon package for Hydromatter Discord bot",
+    "main": "index.js",
+    "dependencies": {
+        "node-fetch": "^2.6.9"
+    }
+}

@@ -42,8 +42,13 @@ module.exports = {
         role: "user",
         content: interaction.options.getString("prompt")
     })
-    const prompt_obj = await hydromatter.database.get(`${interaction.user.id}.chatgpt`)
-
+    let prompt_obj = await hydromatter.database.get(`${interaction.user.id}.chatgpt`)
+    prompt_obj = prompt_obj.slice(Math.max(prompt_obj.length - 5, 0))
+    prompt_obj.unshift({
+        role: "system",
+        content: `The user's name is ${interaction.user.username}`
+    })
+    
     const result = await hydromatter.chatgpt.new(interaction.options.getString("model"), prompt_obj)
     await hydromatter.database.push(`${interaction.user.id}.chatgpt`, {
         role: "assistant",

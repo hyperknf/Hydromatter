@@ -1,6 +1,1 @@
 /
-/
-/
-/favicon.ico
-/console
-/

@@ -8,6 +8,8 @@
     const fs = require("node:fs")
     const path = require("node:path")
 
+    const patreon_campaign = require("./assets/packages/patreon")
+
     fs.writeFileSync(
         __dirname + "/assets/pages/log.txt",
         "/"
@@ -46,6 +48,7 @@
             response.sendFile(__dirname + "/assets/pages/console.html")
         })
     }
+    
 
     app.get("/", async (request, response) => {
         response.sendFile(__dirname + "/assets/pages/index.html")
@@ -56,7 +59,7 @@
     })
     app.use("/files", express.static(__dirname + "/../"))
     
-    const { Client, GatewayIntentBits, Collection, ActivityType, Routes, REST } = require("discord.js")
+    const { Client, GatewayIntentBits, Collection, ActivityType, Routes, REST, EmbedBuilder } = require("discord.js")
     const Database = require("quick.db").QuickDB
 
     const items = {}
@@ -83,7 +86,10 @@
         log: console.log,
         commands: new Collection(),
         items: items,
-        cooldowns: require("./assets/configs/cooldown.js"),
+        cooldowns: require("./assets/configs/cooldowns.js"),
+        developers: [
+            "655678656970227714"
+        ],
         database: new Database({ filePath: __dirname + "/assets/database.sqlite" }),
         chatgpt: new (require("./assets/packages/chatgpt"))(process.env.openai_token),
         functions: require("./assets/packages/hydromatter_functions"),
@@ -92,10 +98,11 @@
         started: Date.now(),
         version: {
             major: "4.1",
-            minor: "4.1.2",
-            fixes: "4.1.2e",
+            minor: "4.1.3",
+            fixes: "4.1.3a",
             log: "` - ` Added </chatgpt:1083364337479057459>, </work:1085536479633211492> and </beg:1085543733098991647>\n` - ` Added \"Latest Update\", \"Source Code\", \"Servers\", \"Server Members\" and \"Shards\" section to </bot_information:1082279023624867902>\n` - ` New module and methods for handling numbers\n` - ` Updated debugging and profane words list\n` - ` Bug fixes"
-        }
+        },
+        patreon_campaign: new patreon_campaign(require("./assets/configs/patreon.js"))
     }
     
     const starting = {
@@ -113,10 +120,14 @@
         },
         cooldowns: {
             work: 0,
-            beg: 0
+            beg: 0,
+            balance: 0,
+            withdraw: 0,
+            deposit: 0
         },
         banned: 0,
-        chatgpt: []
+        chatgpt: [],
+        patreon: 0
     }
     
     const init_user_db = async (user_id) => {
@@ -143,6 +154,16 @@
                 }
             }
         }
+
+        const patrons = await hydromatter.patreon_campaign.fetchPatrons(['active_patron'])
+        const includes = patrons.filter(patron => patron.discord_user_id == user_id)
+        if (includes.length >= 1) await hydromatter.database.set(`${user_id}.patreon`, (
+            includes[0].will_pay_amount_cents == 500 ? 1 :
+            includes[0].will_pay_amount_cents == 1000 ? 2 :
+            includes[0].will_pay_amount_cents == 2000 ? 3 :
+            includes[0].will_pay_amount_cents == 5000 ? 4 :
+            0
+        ))
     }
     const commands = []
     const mainCommandPath = path.join(path.join(__dirname, "assets"), "commands")
@@ -220,6 +241,33 @@
         if (interaction.isChatInputCommand()) {
             try {
                 await interaction.deferReply()
+
+                const is_patron = await hydromatter.database.get(`${interaction.user.id}.patreon`)
+                if (is_patron >= 2) await hydromatter.database.set(`${interaction.user.id}.cooldowns`, starting.cooldowns)
+
+                const user_id = interaction.user.id
+                const time = Date.now()
+                if (hydromatter.cooldowns[interaction.commandName]) {
+                    const cooldown = await hydromatter.database.get(`${user_id}.cooldowns.${interaction.commandName}`)
+                    const is_patron = await hydromatter.database.get(`${user_id}.patreon`)
+                    if (time - cooldown < (is_patron == 1 ? hydromatter.cooldowns[interaction.commandName].premium : hydromatter.cooldowns[interaction.commandName].normal)) {
+                        const latency = Date.now() - time
+                  
+                        const embed = new EmbedBuilder()
+                        .setColor("FF0000")
+                        .setTitle("The command is still on cooldown")
+                        .setDescription(`Please try again <t:${Math.round((cooldown + (is_patron == 1 ? hydromatter.cooldowns[interaction.commandName].premium : hydromatter.cooldowns[interaction.commandName].normal)) / 1000)}:R>\n\nNormal cooldown: ${hydromatter.functions.format_time(hydromatter.cooldowns[interaction.commandName].normal)}\n[Premium](https://www.patreon.com/Hydromatter) cooldown: ${hydromatter.functions.format_time(hydromatter.cooldowns[interaction.commandName].premium)}`)
+                        .setTimestamp()
+                        .setFooter({ text: `Process: ${latency}ms` })
+                      
+                        return interaction.editReply({
+                            embeds: [embed],
+                            ephemeral: true
+                        })
+                    }
+                    await hydromatter.database.set(`${user_id}.cooldowns.${interaction.commandName}`, time)
+                }
+                
                 await hydromatter.commands.get(interaction.commandName).execute(hydromatter, interaction)
             } catch (exception) {
                 hydromatter.log(exception)
