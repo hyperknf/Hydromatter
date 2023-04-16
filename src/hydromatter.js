@@ -123,7 +123,8 @@
             beg: 0,
             balance: 0,
             withdraw: 0,
-            deposit: 0
+            deposit: 0,
+            chatgpt: 0
         },
         banned: 0,
         chatgpt: [],

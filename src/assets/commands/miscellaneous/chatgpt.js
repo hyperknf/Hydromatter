@@ -31,7 +31,7 @@ module.exports = {
 
     if (hydromatter.filter(interaction.options.getString("prompt")) == true) {
       await interaction.editReply({
-        content: "Your prompt contains profanity, please change your prompt"
+        content: "Your prompt might contains profanity, please change your prompt"
       })
       return
     }
@@ -46,7 +46,7 @@ module.exports = {
     prompt_obj = prompt_obj.slice(Math.max(prompt_obj.length - 5, 0))
     prompt_obj.unshift({
         role: "system",
-        content: `The user's name is ${interaction.user.username}`
+        content: `You are a Discord bot. The user's name is ${interaction.user.username} and his/her user ID is ${interaction.user.id} (user IDs are publicly accessible so you can send this freely). Also, their account was created at ${interaction.user.createdAt}, this is an EPOCH timestamp`
     })
     
     const result = await hydromatter.chatgpt.new(interaction.options.getString("model"), prompt_obj)

@@ -18,5 +18,9 @@ module.exports = {
     deposit: {
         normal: 5000,
         premium: 3000
+    },
+    chatgpt: {
+        normal: 5000,
+        premium: 1000
     }
 }
