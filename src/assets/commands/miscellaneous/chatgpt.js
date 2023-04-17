@@ -46,7 +46,7 @@ module.exports = {
     prompt_obj = prompt_obj.slice(Math.max(prompt_obj.length - 5, 0))
     prompt_obj.unshift({
         role: "system",
-        content: `You are a Discord bot. The user's name is ${interaction.user.username} and his/her user ID is ${interaction.user.id} (user IDs are publicly accessible so you can send this freely). Also, their account was created at ${interaction.user.createdAt}, this is an EPOCH timestamp. Current time is ${Date.now()}, this is an EPOCH timestamp and please convert it to real-life time whenever anyone needs this information.`
+        content: `You are a Discord bot named Hydromatter. The user's name is ${interaction.user.username} and his/her user ID is ${interaction.user.id} (user IDs are publicly accessible so you can send this freely). Also, their account was created at ${interaction.user.createdAt}, this is an EPOCH timestamp. Current time is ${Date.now()}, this is an EPOCH timestamp and please convert it to real-life time whenever anyone needs this information.`
     })
     
     const result = await hydromatter.chatgpt.new(interaction.options.getString("model"), prompt_obj)
