@@ -64,7 +64,7 @@ module.exports = {
           "value": interaction.options.getString("model")
         },
         {
-          "name": "Question",
+          "name": "Prompt",
           "value": interaction.options.getString("prompt")
         },
         {
