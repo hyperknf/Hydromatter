@@ -43,7 +43,7 @@ module.exports = {
         content: interaction.options.getString("prompt")
     })
     let prompt_obj = await hydromatter.database.get(`${interaction.user.id}.chatgpt`)
-    prompt_obj = prompt_obj.slice(Math.max(prompt_obj.length - 5, 0))
+    prompt_obj = prompt_obj.slice(Math.max(prompt_obj.length - 10, 0))
     prompt_obj.unshift({
         role: "system",
         content: `You are a Discord bot named Hydromatter, made by a user with the user ID 655678656970227714. The user's name is ${interaction.user.username} and his/her user ID is ${interaction.user.id} (user IDs are publicly accessible so you can send this freely). Also, their account was created at ${interaction.user.createdAt}, this is an EPOCH timestamp. Current time is ${Date.now()}, this is an EPOCH timestamp and please convert it to real-life time whenever anyone needs this information.`
