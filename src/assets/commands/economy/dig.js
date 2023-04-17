@@ -26,7 +26,19 @@ module.exports = {
     const embed = new EmbedBuilder()
       .setColor("FF0000")
       .setTitle(`${interaction.user.username}'s Digging Result`)
-      .setDescription(`You got **${reply_result}** from digging!\n\n**__Chances__**\n__Cash__\n35% **0-3**\n14% **2-5**\n0.9% **7-11**\n0.1% **15-25**\n__Dirt__\n80% **0**\n19% **1**\n0.95% **2**\n0.05% **3**`)
+      .setDescription(`You got **${reply_result}** from digging!`)
+      .addFields(
+          {
+              name: "Cash",
+              value: "50% **0**\n35% **0-3**\n14% **2-5**\n0.9% **7-11**\n0.1% **15-25**",
+              inline: true
+          },
+          {
+              name: hydromatter.items["002"].name,
+              value: "80% **0**\n19% **1**\n0.95% **2**\n0.05% **3**",
+              inline: true
+          }
+      )
       .setTimestamp()
       .setFooter({ text: `Process: ${latency}ms` })
     
