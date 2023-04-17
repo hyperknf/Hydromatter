@@ -112,7 +112,8 @@
             gems: hydromatter.bigint.new(100),
             hydro: hydromatter.bigint.new(0),
             inventory: {
-                "001": hydromatter.bigint.new(0)
+                "001": hydromatter.bigint.new(0),
+                "002": hydromatter.bigint.new(0)
             }
         },
         moderation: {
@@ -124,6 +125,7 @@
             balance: 0,
             withdraw: 0,
             deposit: 0,
+            dig: 0,
             chatgpt: 0
         },
         banned: 0,

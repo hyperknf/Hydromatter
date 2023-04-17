@@ -1,13 +1,13 @@
-const buy = 69420
-const sell = null
-const id = "001"
+const buy = null
+const sell = 10
+const id = "002"
 
 module.exports = {
-    name: "Old Collector's Coin",
+    name: "Dirt",
     id,
     buy,
     sell,
-    async buy(hydromatter, interaction, amount) {
+    async sell(hydromatter, interaction, amount) {
         return interaction.editReply({
             content: "Coming soon!"
         })

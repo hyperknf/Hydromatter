@@ -19,6 +19,10 @@ module.exports = {
         normal: 5000,
         premium: 3000
     },
+    dig: {
+        normal: 60000,
+        premium: 30000
+    },
     chatgpt: {
         normal: 10000,
         premium: 2500
