@@ -99,7 +99,7 @@
         version: {
             major: "4.1",
             minor: "4.1.3",
-            fixes: "4.1.3a",
+            fixes: "4.1.3c",
             log: "` - ` Added </chatgpt:1083364337479057459>, </work:1085536479633211492> and </beg:1085543733098991647>\n` - ` Added \"Latest Update\", \"Source Code\", \"Servers\", \"Server Members\" and \"Shards\" section to </bot_information:1082279023624867902>\n` - ` New module and methods for handling numbers\n` - ` Updated debugging and profane words list\n` - ` Bug fixes"
         },
         patreon_campaign: new patreon_campaign(require("./assets/configs/patreon.js"))
@@ -257,7 +257,7 @@
                         const embed = new EmbedBuilder()
                         .setColor("FF0000")
                         .setTitle("The command is still on cooldown")
-                        .setDescription(`Please try again <t:${Math.round((cooldown + (is_patron == 1 ? hydromatter.cooldowns[interaction.commandName].premium : hydromatter.cooldowns[interaction.commandName].normal)) / 1000)}:R>\n\nNormal cooldown: ${hydromatter.functions.format_time(hydromatter.cooldowns[interaction.commandName].normal)}\n[Premium](https://www.patreon.com/Hydromatter) cooldown: ${hydromatter.functions.format_time(hydromatter.cooldowns[interaction.commandName].premium)}`)
+                        .setDescription(`Please try again <t:${Math.round((cooldown + (is_patron == 1 ? hydromatter.cooldowns[interaction.commandName].premium : hydromatter.cooldowns[interaction.commandName].normal)) / 1000)}:R>\n\nNormal cooldown: ${hydromatter.functions.format_time(hydromatter.cooldowns[interaction.commandName].normal)}\n[Premium](https://www.patreon.com/Hydromatter) cooldown: ${hydromatter.functions.format_time(hydromatter.cooldowns[interaction.commandName].premium)}\n\n**\` - \` Why is there a cooldown?**\nThis is to either balance the system, or to avoid the API to be flooded with requests. If you want faster cooldown(s), you can buy premium [here](https://www.patreon.com/Hydromatter)`)
                         .setTimestamp()
                         .setFooter({ text: `Process: ${latency}ms` })
                       

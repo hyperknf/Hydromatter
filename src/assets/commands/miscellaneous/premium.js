@@ -22,16 +22,6 @@ module.exports = {
                     hydromatter.developers.includes(interaction.user.id) ? "\nDeveloper account" : ""
                 )}**\nVisit [here](https://www.patreon.com/Hydromatter) for more information or purchasing`
             )
-            .addFields(
-                {
-                    name: "Supporter (Basic)",
-                    value: "` - ` Faster cooldown time applied to all commands\n**$5/Month**"
-                },
-                {
-                    name: "Supporter (Premium)",
-                    value: "` - ` Access to beta features\n` - ` No cooldown time on all commands\n**$10/Month**"
-                }
-            )
             .setFooter({
                 text: "Process: 0ms"
             })

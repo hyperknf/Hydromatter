@@ -20,7 +20,7 @@ module.exports = {
         premium: 3000
     },
     chatgpt: {
-        normal: 5000,
-        premium: 1000
+        normal: 10000,
+        premium: 2500
     }
 }
