@@ -99,8 +99,8 @@
         version: {
             major: "4.1",
             minor: "4.1.3",
-            fixes: "4.1.3c",
-            log: "` - ` Added </chatgpt:1083364337479057459>, </work:1085536479633211492> and </beg:1085543733098991647>\n` - ` Added \"Latest Update\", \"Source Code\", \"Servers\", \"Server Members\" and \"Shards\" section to </bot_information:1082279023624867902>\n` - ` New module and methods for handling numbers\n` - ` Updated debugging and profane words list\n` - ` Bug fixes"
+            fixes: "4.1.3d",
+            log: "` - ` Added \"Latest Update\", \"Source Code\", \"Servers\", \"Server Members\" and \"Shards\" section to </bot_information:1082279023624867902>\n` - ` New module and methods for handling numbers\n` - ` Updated debugging and profane words list\n` - ` Bug fixes"
         },
         patreon_campaign: new patreon_campaign(require("./assets/configs/patreon.js"))
     }
