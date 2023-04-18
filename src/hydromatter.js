@@ -24,32 +24,6 @@
         next()
     })
 
-    fs.writeFileSync(
-        __dirname + "/assets/pages/console/main.html",
-        fs.readFileSync(__dirname + "/assets/pages/console/default.html", (error) => {
-            if (error) console.log(error)
-        })
-    )
-    app.get("/console", (request, response) => {
-        response.sendFile(__dirname + "/assets/pages/console/main.html")
-    })
-    console.log = function (...value) {
-        const string = value.join(" ")
-        process.stdout.write(`${string}\n`)
-        const file_content = fs.readFileSync(__dirname + "/assets/pages/console/main.html")
-        fs.writeFileSync(
-            __dirname + "/assets/pages/console/main.html",
-            file_content + `\n${string.replace(/\n/g, "\n<br>\n").replace(/ /g, "⠀")}\n<br>`,
-            (error) => {
-                if (error) console.log(error)
-            }
-        )
-        app.get("/console", async (request, response) => {
-            response.sendFile(__dirname + "/assets/pages/console.html")
-        })
-    }
-    
-
     app.get("/", async (request, response) => {
         response.sendFile(__dirname + "/assets/pages/index.html")
     })

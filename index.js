@@ -1,3 +1,5 @@
+console.log("This is the start of Hydromatter bot console")
+
 const { ShardingManager } = require('discord.js')
 const { token } = require("./src/assets/configs/bot.js")
 
