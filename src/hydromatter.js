@@ -72,40 +72,14 @@
         started: Date.now(),
         version: {
             major: "4.1",
-            minor: "4.1.3",
-            fixes: "4.1.3d",
+            minor: "4.1.5",
+            fixes: "4.1.5a",
             log: "` - ` Added \"Latest Update\", \"Source Code\", \"Servers\", \"Server Members\" and \"Shards\" section to </bot_information:1082279023624867902>\n` - ` New module and methods for handling numbers\n` - ` Updated debugging and profane words list\n` - ` Bug fixes"
         },
         patreon_campaign: new patreon_campaign(require("./assets/configs/patreon.js"))
     }
     
-    const starting = {
-        economy: {
-            cash: hydromatter.bigint.new(0),
-            bank: hydromatter.bigint.new(0),
-            gems: hydromatter.bigint.new(100),
-            hydro: hydromatter.bigint.new(0),
-            inventory: {
-                "001": hydromatter.bigint.new(0),
-                "002": hydromatter.bigint.new(0)
-            }
-        },
-        moderation: {
-            warns: {}
-        },
-        cooldowns: {
-            work: 0,
-            beg: 0,
-            balance: 0,
-            withdraw: 0,
-            deposit: 0,
-            dig: 0,
-            chatgpt: 0
-        },
-        banned: 0,
-        chatgpt: [],
-        patreon: 0
-    }
+    const starting = require("./assets/configs/starting.js")
     
     const init_user_db = async (user_id) => {
         user_id = String(user_id)
@@ -142,6 +116,7 @@
             0
         ))
     }
+    hydromatter.init_user_db = init_user_db
     const commands = []
     const mainCommandPath = path.join(path.join(__dirname, "assets"), "commands")
     let commandsPath = path.join(mainCommandPath, "miscellaneous")
@@ -243,6 +218,16 @@
                         })
                     }
                     await hydromatter.database.set(`${user_id}.cooldowns.${interaction.commandName}`, time)
+                }
+
+                const xp = hydromatter.functions.randint(1, 3)
+                const user_xp = await hydromatter.database.get(`${interaction.user.id}.level.xp`)
+                if (hydromatter.commands.get(interaction.commandName).xp) await hydromatter.database.set(`${interaction.user.id}.level.xp`, user_xp + xp)
+                const new_xp = await hydromatter.database.get(`${interaction.user.id}.level.xp`)
+                const level = await hydromatter.database.get(`${interaction.user.id}.level.level`)
+                if (new_xp >= 100) {
+                    await hydromatter.database.set(`${interaction.user.id}.level.xp`, new_xp - 100)
+                    await hydromatter.database.set(`${interaction.user.id}.level.level`, level + 1)
                 }
                 
                 await hydromatter.commands.get(interaction.commandName).execute(hydromatter, interaction)

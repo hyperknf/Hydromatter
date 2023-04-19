@@ -39,7 +39,7 @@ module.exports = {
                 .setTimestamp()
             for (let item in hydromatter.items) embed.addFields({
                 name: hydromatter.items[item].name,
-                value: `$${hydromatter.bigint.toNumberString("suffix", hydromatter.bigint.new(hydromatter.items[item].price))}`,
+                value: `Buy: ${hydromatter.items[item].buy ? `$${hydromatter.items[item].buy}` : "N/A"}\nSell: ${hydromatter.items[item].sell ? `$${hydromatter.items[item].sell}` : "N/A"}`,
                 inline: true
             })
             embed.setFooter({ text: `Process: ${Date.now() - time}ms` })

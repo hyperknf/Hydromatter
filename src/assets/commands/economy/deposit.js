@@ -18,7 +18,7 @@ module.exports = {
         const amount = interaction.options.getNumber("amount")
         let cash = await hydromatter.database.get(`${user_id}.economy.cash`)
         let bank = await hydromatter.database.get(`${user_id}.economy.bank`)
-        if (hydromatter.bigint.isLarger(amount, cash)) return interaction.editReply({
+        if (amount > cash) return interaction.editReply({
             content: "The amount you've entered was higher than what you can deposit",
             ephemeral: true
         })
@@ -27,8 +27,8 @@ module.exports = {
             ephemeral: true
         })
     
-        await hydromatter.database.set(`${user_id}.economy.cash`, hydromatter.bigint.minus(cash, amount))
-        await hydromatter.database.set(`${user_id}.economy.bank`, hydromatter.bigint.add(bank, amount))
+        await hydromatter.database.set(`${user_id}.economy.cash`, cash - amount)
+        await hydromatter.database.set(`${user_id}.economy.bank`, bank + amount)
 
         cash = await hydromatter.database.get(`${user_id}.economy.cash`)
         bank = await hydromatter.database.get(`${user_id}.economy.bank`)
@@ -44,12 +44,12 @@ module.exports = {
                 },
                 {
                     name: "Pocket",
-                    value: `$${hydromatter.bigint.toNumberString("suffix", cash)}`,
+                    value: `$${cash}`,
                     inline: true
                 },
                 {
                     name: "Bank",
-                    value: `$${hydromatter.bigint.toNumberString("suffix", bank)}`,
+                    value: `$${bank}`,
                     inline: true
                 }
             )

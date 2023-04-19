@@ -8,6 +8,8 @@ const database = new QuickDB({ filePath: "./src/assets/database.sqlite" })
 
 console.log("Started initializing database...")
 
+const starting = require("./src/assets/configs/starting.js")
+
 const whole_db = database.all()
 try {
     (async () => {

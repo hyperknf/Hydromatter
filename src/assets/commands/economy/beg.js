@@ -8,13 +8,11 @@ module.exports = {
     const time = Date.now()
     
     const user_id = interaction.user.id
-        
-    await hydromatter.database.set(`${user_id}.cooldowns.beg`, time)
 
     let income = hydromatter.functions.randint(0, 7)
 
     const cash = await hydromatter.database.get(`${user_id}.economy.cash`)
-    await hydromatter.database.set(`${user_id}.economy.cash`, hydromatter.bigint.add(cash, hydromatter.bigint.new(income)))
+    await hydromatter.database.set(`${user_id}.economy.cash`, cash + income)
 
     const latency = Date.now() - time
     const embed = new EmbedBuilder()
@@ -27,5 +25,6 @@ module.exports = {
     await interaction.editReply({
       embeds: [embed]
     })
-	}
+	},
+    xp: true
 }

@@ -8,8 +8,6 @@ module.exports = {
     const time = Date.now()
     
     const user_id = interaction.user.id
-        
-    await hydromatter.database.set(`${user_id}.cooldowns.dig`, time)
 
     const cash_rng = hydromatter.functions.randint(1, 1000)
     const item_rng = hydromatter.functions.randint(1, 10000)
@@ -17,16 +15,14 @@ module.exports = {
 
     const cash = await hydromatter.database.get(`${user_id}.economy.cash`)
     const item = await hydromatter.database.get(`${user_id}.economy.inventory.002`)
-    await hydromatter.database.set(`${user_id}.economy.cash`, hydromatter.bigint.add(cash, result[0]))
-    await hydromatter.database.set(`${user_id}.economy.inventory.002`, hydromatter.bigint.add(item, result[1]))
-
-    const reply_result = result[0] == 0 && result[1] == 0 ? "nothing" : result[0] == 0 ? `${result[1]} ${hydromatter.items["002"].name}` : result[1] == 0 ? `$${result[0]}` : `$${result[0]}** and **${result[1]} ${hydromatter.items["002"].name}`
+    await hydromatter.database.set(`${user_id}.economy.cash`, cash + result[0])
+    await hydromatter.database.set(`${user_id}.economy.inventory.002`, cash + result[1])
 
     const latency = Date.now() - time
     const embed = new EmbedBuilder()
       .setColor("FF0000")
       .setTitle(`${interaction.user.username}'s Digging Result`)
-      .setDescription(`You got **${reply_result}** from digging!`)
+      .setDescription(`You got **$${result[0]}** and **${result[1]} ${hydromatter.items["002"].name}** from digging!`)
       .addFields(
           {
               name: "Cash",
@@ -45,5 +41,6 @@ module.exports = {
     await interaction.editReply({
       embeds: [embed]
     })
-	}
+	},
+    xp: true
 }

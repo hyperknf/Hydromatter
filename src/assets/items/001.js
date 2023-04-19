@@ -7,7 +7,7 @@ module.exports = {
     id,
     buy,
     sell,
-    async buy(hydromatter, interaction, amount) {
+    async buy_item(hydromatter, interaction, amount) {
         return interaction.editReply({
             content: "Coming soon!"
         })

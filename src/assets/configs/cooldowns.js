@@ -23,6 +23,10 @@ module.exports = {
         normal: 60000,
         premium: 30000
     },
+    fish: {
+        normal: 45000,
+        premium: 15000
+    },
     chatgpt: {
         normal: 10000,
         premium: 2500
