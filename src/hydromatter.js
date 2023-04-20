@@ -10,10 +10,6 @@
 
     const patreon_campaign = require("./assets/packages/patreon")
 
-    fs.writeFileSync(
-        __dirname + "/assets/pages/log.txt",
-        "/"
-    )
     app.use((request, response, next) => {
         fs.writeFileSync(
             __dirname + "/assets/pages/log.txt",
@@ -66,14 +62,14 @@
         ],
         database: new Database({ filePath: __dirname + "/assets/database.sqlite" }),
         chatgpt: new (require("./assets/packages/chatgpt"))(process.env.openai_token),
-        functions: require("./assets/packages/hydromatter_functions"),
+        functions: require("./assets/packages/functions"),
         filter: require("./assets/packages/filter"),
         bigint: require("./assets/packages/bigint"),
         started: Date.now(),
         version: {
             major: "4.1",
             minor: "4.1.5",
-            fixes: "4.1.5a",
+            fixes: "4.1.5b",
             log: "` - ` Added \"Latest Update\", \"Source Code\", \"Servers\", \"Server Members\" and \"Shards\" section to </bot_information:1082279023624867902>\n` - ` New module and methods for handling numbers\n` - ` Updated debugging and profane words list\n` - ` Bug fixes"
         },
         patreon_campaign: new patreon_campaign(require("./assets/configs/patreon.js"))
@@ -151,7 +147,7 @@
         hydromatter.log(`|===> ${user_object.user.username} has successfully logged in`)
         hydromatter.log(`|===> Version\n |==> Major\n  |=> ${hydromatter.version.major}\n |==> Minor\n  |=> ${hydromatter.version.minor}\n |==> Fixes\n  |=> ${hydromatter.version.fixes}`)
         hydromatter.log(`|===> Timestamp\n |==> ${hydromatter.started}`)
-        hydromatter.log(`|===> Hosting\n |==> Port\n  |=> ${port}\n |==> Page\n  |=> https://Hydromatter.hyperknf.repl.co`)
+        hydromatter.log(`|===> Hosting\n |==> Port\n  |=> ${port}\n |==> Page\n  |=> https://hydromatter.hyperknf.repl.co`)
         hydromatter.log(`|===> Source Code\n |==> ${hydromatter.source_code}`)
         hydromatter.log(`*********************************************\n`)
     

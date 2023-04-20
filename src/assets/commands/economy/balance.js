@@ -3,7 +3,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("balance")
-		.setDescription("Check your balance in the bot's economy system")
+		.setDescription("Check a user's balance in the bot's economy system")
         .addUserOption(option =>
     		option.setName("user")
     			.setDescription("The user's balance you want to check, leave empty if you want to check yourself")
@@ -20,6 +20,13 @@ module.exports = {
         const bank = await hydromatter.database.get(`${user_id}.economy.bank`)
         const gems = await hydromatter.database.get(`${user_id}.economy.gems`)
         const hydro = await hydromatter.database.get(`${user_id}.economy.hydro`)
+        
+        let item_worth = 0
+        const inventory = await hydromatter.database.get(`${user_id}.economy.inventory`)
+        for (let item in inventory) {
+            const amount = inventory[item]
+            item_worth += (hydromatter.items[item].buy ? hydromatter.items[item].buy : hydromatter.items[item].sell ? hydromatter.items[item].sell : 0) * amount
+        }
     
         const latency = Date.now() - time
         embed = new EmbedBuilder()
@@ -40,7 +47,7 @@ module.exports = {
                 },
                 {
                     "name": "Net Worth",
-                    "value": `$${cash + bank}`
+                    "value": `$${cash + bank + item_worth}`
                 },
                 {
                     "name": "Gems",

@@ -43,6 +43,14 @@ module.exports = {
       } catch (exception) {
         result = `Failed:\n${exception}`
       }
+    } else if (interaction.options.getString("command").toLowerCase() == "raw_eval") {
+      try {
+        const stdout = await eval(`(async () => { ${interaction.options.getString("value")} })()`)
+        result = `Success:\n\`\`\`${interaction.options.getString("value")}\`\`\``
+        result += `\nCode Output:\n\`\`\`${stdout}\`\`\``
+      } catch (exception) {
+        result = `Failed:\n${exception}`
+      }
     } else if (interaction.options.getString("command").toLowerCase() == "log") {
       try {
         hydromatter.log(interaction.options.getString("value"))

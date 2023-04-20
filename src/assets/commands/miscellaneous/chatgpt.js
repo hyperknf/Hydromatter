@@ -60,7 +60,7 @@ module.exports = {
       .setDescription(result)
       .addFields(
         {
-          "name": "ChatGPT Model",
+          "name": "Model",
           "value": interaction.options.getString("model")
         },
         {

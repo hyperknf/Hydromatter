@@ -3,7 +3,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("inventory")
-		.setDescription("Check your inventory in the bot's economy system")
+		.setDescription("Check a user's inventory in the bot's economy system")
         .addUserOption(option =>
     		option.setName("user")
     			.setDescription("The user's inventory you want to check, leave empty if you want to check yourself")

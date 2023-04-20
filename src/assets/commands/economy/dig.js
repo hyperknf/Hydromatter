@@ -16,7 +16,7 @@ module.exports = {
     const cash = await hydromatter.database.get(`${user_id}.economy.cash`)
     const item = await hydromatter.database.get(`${user_id}.economy.inventory.002`)
     await hydromatter.database.set(`${user_id}.economy.cash`, cash + result[0])
-    await hydromatter.database.set(`${user_id}.economy.inventory.002`, cash + result[1])
+    await hydromatter.database.set(`${user_id}.economy.inventory.002`, item + result[1])
 
     const latency = Date.now() - time
     const embed = new EmbedBuilder()

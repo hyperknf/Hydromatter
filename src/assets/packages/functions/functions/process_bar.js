@@ -25,9 +25,9 @@ const bars = [
 module.exports = function (percentage) {
     const pointer = Math.floor(percentage / 4)
     const first = pointer == 0 ? 0 : Math.min(pointer, 5) - 1
-    const second = Math.min(Math.max(pointer - 5, 1), 5) - 1
-    const third = Math.min(Math.max(pointer - 10, 1), 5) - 1
-    const fourth = Math.min(Math.max(pointer - 15, 1), 5) - 1
-    const fifth = Math.min(Math.max(pointer - 20, 1), 5) - 1
+    const second = pointer == 5 ? 1 : Math.min(Math.max(pointer - 5, 0), 4)
+    const third = pointer == 10 ? 1 : Math.min(Math.max(pointer - 10, 0), 4)
+    const fourth = pointer == 15 ? 1 : Math.min(Math.max(pointer - 15, 0), 4)
+    const fifth = pointer == 20 ? 1 : Math.min(Math.max(pointer - 20, 0), 4)
     return bars[0][first] + bars[1][second] + bars[1][third] + bars[1][fourth] + bars[2][fifth]
 }
